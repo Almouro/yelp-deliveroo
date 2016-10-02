@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+
+  "name": "Yelp Deliveroo",
+  "description": "Chrome extension to get Yelp info on restaurants on Deliveroo.com",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [{
+    "all_frames": true,
+    "js": [ "index.js" ],
+    "matches": [ "https://deliveroo.fr/*/*" ],
+    "run_at": "document_end"
+  }]
+}

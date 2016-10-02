@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
+  "globals": {
+    "window": true,
+    "fetch": true
+  },
+  "plugins": [
+    "react",
+    "flowtype"
+  ],
+  "rules": {
+    "react/no-unused-prop-types": [ 2, { "skipShapeProps": true }]
+  },
+}
