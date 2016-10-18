@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import qs from 'qs';
 import Storage from './storage';
+import config from './config.json';
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
@@ -19,7 +20,7 @@ const query = (url) => {
 
   if (storedValue) return Promise.resolve(storedValue);
 
-  return fetch(`https://api.yelp.com/v3${url}`, {
+  return fetch(`https://${config}/api.yelp.com:443/v3${url}`, {
     method: 'GET',
     headers: {
       Authorization: 'Bearer INSERT_ACCESS_TOKEN_HERE',

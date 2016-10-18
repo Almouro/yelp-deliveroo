@@ -8,10 +8,15 @@ A Chrome extension to get Yelp info on restaurants on Deliveroo.com
 
 First, you have to create a Yelp app to use their API.
 
+Yelp, does not allow CORS, so set up a [Cors anywhere](https://github.com/Rob--W/cors-anywhere)
+server.
+
 Then, run
 ```
 npm install
+cp src/yelp-api/config.json.dist src/yelp-api/config.json
 ```
+And fill the parameters in the config.
 
 ## Development
 

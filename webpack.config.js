@@ -9,12 +9,13 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel' },
+      { test: /\.json$/, loader: 'json' },
       { test: /\.css$/, loader: 'style!css' },
       { test: /\.png$/, loader: 'url-loader?limit=10000&minetype=image/png' },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', 'json'],
   },
   devServer: {
     contentBase: '.',
