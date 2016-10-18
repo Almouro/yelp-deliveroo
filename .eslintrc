@@ -5,7 +5,8 @@
   ],
   "globals": {
     "window": true,
-    "fetch": true
+    "fetch": true,
+    "FormData": true
   },
   "plugins": [
     "react",

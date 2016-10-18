@@ -3,6 +3,9 @@ import qs from 'qs';
 import Storage from './storage';
 import config from './config.json';
 
+const YELP_BASE_URL = `https://${config.CORS_ANYWHERE_URL}/api.yelp.com:443`;
+const AUTHENTICATION_TOKEN_STORAGE_KEY = 'token';
+
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -14,16 +17,37 @@ const checkStatus = (response) => {
 
 const parseJson = response => response.json();
 
+const setAuthenticationToken = () => {
+  const form = new FormData();
+  form.append('grant_type', 'client_credentials');
+  form.append('client_id', config.YELP_APP_ID);
+  form.append('client_secret', config.YELP_APP_SECRET);
+
+  return fetch(`${YELP_BASE_URL}/oauth2/token`, {
+    method: 'POST',
+    body: form,
+  })
+  .then(checkStatus)
+  .then(parseJson)
+  .then((data) => {
+    Storage.set(AUTHENTICATION_TOKEN_STORAGE_KEY, data);
+    return data;
+  })
+  .catch((error) => {
+    console.log('request failed', error);
+  });
+};
+
 const query = (url) => {
   const storageKey = `yelp_api.${url}`;
   const storedValue = Storage.get(storageKey);
 
   if (storedValue) return Promise.resolve(storedValue);
 
-  return fetch(`https://${config}/api.yelp.com:443/v3${url}`, {
+  return fetch(`${YELP_BASE_URL}/v3${url}`, {
     method: 'GET',
     headers: {
-      Authorization: 'Bearer INSERT_ACCESS_TOKEN_HERE',
+      Authorization: `Bearer ${Storage.get(AUTHENTICATION_TOKEN_STORAGE_KEY).access_token}`,
     },
   })
   .then(checkStatus)
@@ -32,8 +56,8 @@ const query = (url) => {
     Storage.set(storageKey, data);
     return data;
   })
-  .catch(() => {
-    // console.log('request failed', error);
+  .catch((error) => {
+    console.log('request failed', error);
   });
 };
 
@@ -46,4 +70,5 @@ export default {
     location: 'Paris',
     categories: 'restaurants',
   }),
+  setAuthenticationToken,
 };
