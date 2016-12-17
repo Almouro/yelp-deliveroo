@@ -38,11 +38,15 @@ const setAuthenticationToken = () => {
   });
 };
 
+const nowTimestamp = new Date().getTime();
+
 const query = (url) => {
   const storageKey = `yelp_api.${url}`;
   const storedValue = Storage.get(storageKey);
 
-  if (storedValue) return Promise.resolve(storedValue);
+  if (storedValue && nowTimestamp < storedValue.cacheExpirationTimestamp) {
+    return Promise.resolve(storedValue.data);
+  }
 
   return fetch(`${YELP_BASE_URL}/v3${url}`, {
     method: 'GET',
@@ -53,7 +57,10 @@ const query = (url) => {
   .then(checkStatus)
   .then(parseJson)
   .then((data) => {
-    Storage.set(storageKey, data);
+    Storage.set(storageKey, {
+      data,
+      cacheExpirationTimestamp: nowTimestamp + (24 * 3600 * 1000),
+    });
     return data;
   })
   .catch((error) => {
