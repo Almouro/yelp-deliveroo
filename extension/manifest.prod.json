@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Yelp Deliveroo",
-  "description": "See Yelp info for restaurants on Deliveroo.com",
+  "description": "See Yelp info for restaurants on Deliveroo",
   "version": "1.0",
 
   "browser_action": {
@@ -17,7 +17,10 @@
   "content_scripts": [{
     "all_frames": true,
     "js": [ "index.js" ],
-    "matches": [ "https://deliveroo.fr/*/*" ],
+    "matches": [
+      "https://deliveroo.fr/*/*",
+      "https://deliveroo.co.uk/*/*"
+    ],
     "run_at": "document_end"
   }]
 }
