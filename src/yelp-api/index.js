@@ -3,6 +3,8 @@ import qs from 'qs';
 import Storage from './storage';
 import config from './config.json';
 
+const checkNamesCorrespond = require('./checkNamesCorrespond');
+
 const YELP_BASE_URL = `https://${config.CORS_ANYWHERE_URL}/api.yelp.com:443`;
 const AUTHENTICATION_TOKEN_STORAGE_KEY = 'token';
 
@@ -73,6 +75,15 @@ export default {
     term: name,
     location,
     categories: 'restaurants',
+  }).then((data) => {
+    if (!data.businesses || !data.businesses.length) return null;
+
+    const restaurant = data.businesses[0];
+
+    return checkNamesCorrespond(name, restaurant.name) ? restaurant : null;
+  }).catch((error) => {
+    console.warn('An error has occured', error);
+    return null;
   }),
   setAuthenticationToken,
 };
