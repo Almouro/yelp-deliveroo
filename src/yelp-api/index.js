@@ -72,9 +72,9 @@ const search = parameters =>
   query(`/businesses/search?${qs.stringify(parameters)}`);
 
 export default {
-  searchRestaurant: name => search({
+  searchRestaurant: (name, location) => search({
     term: name,
-    location: 'Paris',
+    location,
     categories: 'restaurants',
   }),
   setAuthenticationToken,
