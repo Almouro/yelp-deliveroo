@@ -14,6 +14,12 @@ YelpApi.setAuthenticationToken().then(() => {
       const yelpContent = window.document.createElement('div');
       $(this).append(yelpContent);
       ReactDOM.render(<YelpRestaurantInformation restaurant={data.businesses[0]} />, yelpContent);
+    })
+    .catch((error) => {
+      console.warn('An error has occured', error);
+      const yelpContent = window.document.createElement('div');
+      $(this).append(yelpContent);
+      ReactDOM.render(<YelpRestaurantInformation />, yelpContent);
     });
   });
 });

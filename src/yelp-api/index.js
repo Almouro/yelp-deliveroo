@@ -62,9 +62,6 @@ const query = (url) => {
       cacheExpirationTimestamp: nowTimestamp + (24 * 3600 * 1000),
     });
     return data;
-  })
-  .catch((error) => {
-    console.log('request failed', error);
   });
 };
 
