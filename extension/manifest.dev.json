@@ -3,7 +3,7 @@
 
   "name": "Yelp Deliveroo",
   "description": "See Yelp info for restaurants on Deliveroo",
-  "version": "1.2",
+  "version": "1.4",
 
   "browser_action": {
     "default_icon": "hamburger.png"
